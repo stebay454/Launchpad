@@ -9,8 +9,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
-    pool: 'threads',
-    fileParallelism: false,
+    pool: 'forks',
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any,
 });
