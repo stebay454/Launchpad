@@ -17,7 +17,9 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json,md}\"",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "env:check": "node --env-file=.env scripts/check-env.js",
+    "test:node": "node --test scripts/env-test.js"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
