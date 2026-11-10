@@ -1,75 +1,76 @@
-# React + TypeScript + Vite
+launchpad
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript starter template with the tooling already wired up and verified: linting, formatting, git hooks, tests, and CI.
 
-Currently, two official plugins are available:
+What's included
+Area Tool
+Build / dev server Vite
+UI React + TypeScript + Tailwind CSS
+Package manager pnpm (version pinned via packageManager)
+Node version Pinned in .nvmrc
+Linting ESLint (flat config) + typescript-eslint, React hooks and jsx-a11y rules
+Formatting Prettier + eslint-config-prettier
+Git hooks Husky + lint-staged (runs on every commit)
+Unit tests Vitest
+Env check Node script (--env-file) + tests with node:test
+CI GitHub Actions (format, lint, typecheck, tests, build)
+Maintenance Dependabot (weekly), CHANGELOG.md
+Prerequisites
+Node (use the version in .nvmrc)
+pnpm (version is set in package.json under packageManager; enable it with corepack enable)
+Git
+Start a new project from this template
+Click Use this template at the top of this repo, then Create a new repository.
+Clone your new repo and enter the folder.
+Install dependencies:
+bash
+pnpm install
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This also installs the Husky git hooks.
 
-## React Compiler
+Create your local env file:
+bash
+cp .env.example .env
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+On Windows PowerShell: Copy-Item .env.example .env
 
-## Expanding the ESLint configuration
+Start the dev server:
+bash
+pnpm dev
+Update name in package.json, reset CHANGELOG.md, and replace this README.
+Scripts
+Command What it does
+pnpm dev Start the Vite dev server
+pnpm build Production build
+pnpm typecheck Type-check the project
+pnpm lint Run ESLint
+pnpm format Format files with Prettier
+pnpm format:check Check formatting without changing files
+pnpm test Run Vitest (watch mode locally)
+pnpm test:node Run the Node test runner tests in scripts/
+pnpm env:check Verify required env vars are set (needs a local .env)
+Environment variables
+Real values live in .env, which is git-ignored and must never be committed.
+.env.example lists every variable the project expects, with fake values. Keep it up to date when you add one.
+pnpm env:check fails with a clear message and exit code 1 if a required variable is missing or empty.
+Any variable prefixed with VITE_ is embedded in the browser bundle and is publicly readable. Never put secrets in a VITE_ variable.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+To require a new variable, add its name to the required list in scripts/check-env.js and to .env.example.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Git hooks
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+On every commit, lint-staged runs on the staged files. A commit with lint or format errors is blocked. If hooks aren't running in a fresh clone, run pnpm install again.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+CI
 
-```
+GitHub Actions runs on every pull request and on pushes to main: install with a frozen lockfile, format check, lint, typecheck, tests, Node tests, and build. pnpm env:check is intentionally not run in CI because there is no .env there.
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Recommended: in your repo's settings, add a ruleset that requires the CI check to pass before merging into main.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Dependency updates
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Dependabot opens weekly PRs for outdated or vulnerable dependencies (see .github/dependabot.yml).
 
-```
+Versioning
+
+Changes are recorded in CHANGELOG.md. Releases are tagged (v0.1.0 and onward).

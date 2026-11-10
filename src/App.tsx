@@ -4,7 +4,6 @@ export default function App() {
       <h1 className="text-4xl font-extrabold tracking-tight text-emerald-400">
         Launchpad is Live 🚀
       </h1>
-      <p>csdvonv dvdfv qsqwdoivm wcmkfdv dvmofv</p>
     </main>
   );
 }
